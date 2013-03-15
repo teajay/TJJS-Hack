@@ -17,7 +17,6 @@ class Recipe(db.Model):
 class RecipeItem(db.Model):
     recipe = db.ReferenceProperty(Recipe, collection_name = "items")
     ingredient = db.StringProperty()
-    #measure = db.StringProperty()
     
 
 class IngredientProvider:
