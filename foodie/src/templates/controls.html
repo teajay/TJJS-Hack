@@ -1,0 +1,93 @@
+{# Button stuff #}
+
+{% macro button_link(location, text) -%}
+	<button type='button' class='foodie_button' value='{{location}}'>{{ text }}</button>
+{%- endmacro %}
+
+{% macro button_post_link(location, text) -%}
+	<button type='button' class='foodie_post_button' value='{{location}}'>{{ text }}</button>
+{%- endmacro %}
+
+{% macro button(text, class) -%}
+	<button class='{{class}}'>{{ text }}</button>
+{%- endmacro %}
+
+{# grid stuff #}
+
+{% macro grid() -%}
+	<table>{{ caller() }}</table>
+{%- endmacro %}
+
+{% macro row() -%}
+	<tr>{{ caller() }}</tr>
+{%- endmacro %}
+
+{% macro column() -%}
+	<td>{{ caller() }}</td>
+{%- endmacro %}
+
+{# Inputs and form stuff #}
+
+{% macro form(saveText, action, is_multipart) -%}
+	{% set enc_type = '' %}
+	{% if is_multipart %}
+		{% set enc_type = 'enctype="multipart/form-data"' %}
+	{% endif %}
+	<form action="{{ action }}" method="POST" {{ enc_type }}>
+		<fieldset class="fieldset-auto-width">
+			{{ caller() }}
+			{{ button(saveText, "form_submit") }}
+		</fieldset>
+	</form>
+{%- endmacro %}
+
+{% macro add_more_input(type, name, text, class='foodie-add-more-input') -%}
+	{{ text }}
+	<div>
+		<input type="{{ type }}" name="{{ name }}" class="{{ class }} text ui-widget-content ui-corner-all"/>
+		{{ button("+", "add_another_input") }}
+	</div>
+{%- endmacro %}
+
+{% macro input(type, name, label) -%}
+	<div>
+		<label for='{{ name }}'>{{ label }}</label>
+	</div>
+	<div>
+		<input type='{{ type }}' name='{{ name }}' class='text ui-widget-content ui-corner-all' />
+	</div>
+{%- endmacro %}
+
+{% macro file_input(name, label) -%}
+	<div>
+		<label for='{{ name }}'>{{ label }}</label>
+	</div>
+	<div>
+		<input type='file' name='{{ name }}' />
+	</div>
+{%- endmacro %}
+
+{% macro floating_list() -%}
+	<div class='foodie-float-list'>
+		{{ caller() }}
+	</div>
+{%- endmacro %}
+
+{% macro float_element(title, location, icon_location) -%}
+	<div class='foodie-float-element'>
+		<a href='{{ location }}'>{{ title }}</a>
+		<div class='foodie-float-icon'>
+			<img src='{{ icon_location }}' />
+		</div>
+	</div>
+{%- endmacro %}
+
+{% macro image(location, img_width='', img_height='') -%}
+	{% if img_width != '' %}
+		{% set width = "width=" ~ "'" ~ img_width ~ "'" %}
+	{% endif %}
+	{% if img_height != '' %}
+		{% set height = "height=" ~ "'" ~ img_height ~ "'" %}
+	{% endif %}
+	<img src='{{ location }}' {{ width }} {{ height }}>
+{%- endmacro %}

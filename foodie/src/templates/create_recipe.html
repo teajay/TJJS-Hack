@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% import "controls.html" as controls %}
+
+{% block content %}
+	{% call controls.form("Save", save_recipe_location, 'true') %}
+		{{ controls.input("text", "title", "Title:") }}
+		{{ controls.input("text", "author", "Author:") }}
+		{{ controls.input("text", "cookbook", "Cookbook") }}
+		{{ controls.file_input("img", "Photo") }}
+		{{ controls.add_more_input("text", "test", "Ingredients", "auto_complete_blah") }}
+	{% endcall %}
+{% endblock %}

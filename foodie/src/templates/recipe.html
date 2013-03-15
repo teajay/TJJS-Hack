@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% import "controls.html" as controls %}
+
+{% block content %}
+	<h1>
+		{{ recipe.title }}
+	</h1>
+	
+	<div>
+	 {{ controls.button_post_link(location_provider.get_delete_location(recipe), 'Delete') }}
+	</div>
+	
+	<h2>
+		{{ recipe.author }}
+	</h2>
+	<h3>
+		{{ recipe.cookbook }}
+	</h3>
+	
+	<ul class='ingredients'>
+		{% for recipe_item in recipe.items %}
+			<li>
+				{{ recipe_item.ingredient }}
+			</li>
+		{% endfor %}
+	</ul>
+	
+	<div>
+		{{ controls.image(location_provider.get_photo_location(recipe), 512, 512) }}
+	</div>
+	
+{% endblock %}

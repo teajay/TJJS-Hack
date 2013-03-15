@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% import "controls.html" as controls %}
+
+{% block content %}
+		{% call controls.floating_list() %}
+			{% for recipe in recipes %}
+				{{ controls.float_element(recipe.title if recipe.title != '' else 'no-title',
+					location_provider.get_location(recipe),
+					location_provider.get_icon_location(recipe)) }}
+			{% endfor %}
+		{% endcall %}
+	
+{% endblock %}

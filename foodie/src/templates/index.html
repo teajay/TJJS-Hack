@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <form action="/save_recipe" method="post">
+      <div>Title: <input type="text" name="title" /></div>
+      <div>Cookbook: <input type="text" name="cookbook" /></div>
+      <div>Author: <input type="text" name="author" /></div>
+      <div><input type="submit" value="Add recipe"></div>
+    </form>
+{% endblock %}
