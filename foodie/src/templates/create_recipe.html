@@ -1,8 +1,7 @@
-{% extends "layout.html" %}
 {% import "controls.html" as controls %}
 
 {% block content %}
-	{% call controls.form("Save", save_recipe_location, 'true') %}
+	{% call controls.form("Create Recipe", location_provider.get_save_location(), true, "create-recipe-form") %}
 		{{ controls.input("text", "title", "Title:") }}
 		{{ controls.input("text", "author", "Author:") }}
 		{{ controls.input("text", "cookbook", "Cookbook") }}

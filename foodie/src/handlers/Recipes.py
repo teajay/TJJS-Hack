@@ -13,7 +13,7 @@ class RecipesHandler(FoodieHandler):
             
         template_values = {
             'recipes': recipes,
-            'location_provider': RecipeLocationProvider()
+            'location_provider': RecipeLocationProvider(),
         }
         
         self.render_template('recipes.html', template_values)
@@ -72,12 +72,6 @@ class RecipeIconHandler(FoodieHandler):
         return '/recipe_icon?img_id=' + key
    
 class CreateRecipeHandler(FoodieHandler):
-    def get(self):
-        template_values = {
-            'save_recipe_location': CreateRecipeHandler.location()
-        }
-        
-        self.render_template("create_recipe.html", template_values)
         
     def post(self):
         recipe = Recipe()
@@ -94,11 +88,15 @@ class CreateRecipeHandler(FoodieHandler):
         for ingredient in ingredients:
             RecipeItem(recipe=recipe, ingredient=ingredient).put()
         
-        self.redirect(RecipesHandler.location())
+        template_values = {
+            "recipe": recipe,
+            "location_provider": RecipeLocationProvider()
+        }
+        self.render_template("float_element.html", template_values)
         
     @staticmethod
     def location():
-        return '/' 
+        return '/create_recipe' 
 
 class DeleteRecipeHandler(FoodieHandler):
     
@@ -148,4 +146,7 @@ class RecipeLocationProvider:
     def get_icon_location(self, recipe):
         str_id = str(recipe.key())
         return RecipeIconHandler.location_for_recipe(str_id)
+    
+    def get_save_location(self):
+        return CreateRecipeHandler.location()
     

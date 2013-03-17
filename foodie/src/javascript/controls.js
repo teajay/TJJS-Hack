@@ -1,7 +1,9 @@
 $(function() {
 	$('.foodie_button').button().click(function() {
 		var location = $(this).attr('value');
-		window.location.href = location;
+		if(location) {
+			window.location.href = location;
+		}
 	});
 	
 	$('.foodie_post_button').button().click(function() {
@@ -35,12 +37,48 @@ $(function() {
 		form.submit();
 	});
 	
-	$( ".auto_complete_blah" ).autocomplete({
+	$(".auto_complete_blah").autocomplete({
 	      source: "get_ingredients",
 	      minLength: 2,
 	      select: function(event, ui) {
 	    	  
 	      }
 	});
+	
+	$("#create-recipe-form").dialog({
+	      autoOpen: false,
+	      height: 600,
+	      width: 400,
+	      modal: true,
+	      buttons: {
+	    	Save: function() {
+	    		var form = $(this);
+	    		var formData = new FormData(form[0]); 
+	    		$.ajax({
+	    	        url: form.attr("action"),
+	    	        type: 'POST',
+	    	        data: formData,
+	    	        //Options to tell JQuery not to process data or worry about content-type
+	    	        cache: false,
+	    	        contentType: false,
+	    	        processData: false,
+	    	        success: function(data) {
+	    	        	$('#recipe-list').append(data);
+	    	        }
+	    		});
+	    		$(this).dialog("close");
+	    	},
+	        Cancel: function() {
+	          $( this ).dialog("close");
+	        }
+	      },
+	      close: function() {
+	      }
+	});
+	
+	$(".create-recipe-button").click(function() {
+		$( "#create-recipe-form" ).dialog( "open" );
+		return false;
+	})
 })
 

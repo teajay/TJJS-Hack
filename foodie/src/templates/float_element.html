@@ -1,0 +1,5 @@
+{% import "controls.html" as controls %}
+
+{{ controls.float_element(recipe.title if recipe.title != '' else 'no-title',
+	location_provider.get_location(recipe),
+	location_provider.get_icon_location(recipe)) }}

@@ -34,3 +34,8 @@ input.text {
 	width:95%;
 	padding: .4em;
 }
+
+fieldset {
+	border-style:none;
+}
+

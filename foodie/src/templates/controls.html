@@ -9,7 +9,11 @@
 {%- endmacro %}
 
 {% macro button(text, class) -%}
-	<button class='{{class}}'>{{ text }}</button>
+	<button class='foodie_button {{class}}'>{{ text }}</button>
+{%- endmacro %}
+
+{% macro link(text, class) -%}
+	<a class='{{ class }}' href='javascript:void(0)'>{{ text }}</a>
 {%- endmacro %}
 
 {# grid stuff #}
@@ -28,15 +32,14 @@
 
 {# Inputs and form stuff #}
 
-{% macro form(saveText, action, is_multipart) -%}
+{% macro form(title, action, is_multipart=false, id='') -%}
 	{% set enc_type = '' %}
 	{% if is_multipart %}
 		{% set enc_type = 'enctype="multipart/form-data"' %}
 	{% endif %}
-	<form action="{{ action }}" method="POST" {{ enc_type }}>
+	<form action="{{ action }}" method="POST" {{ enc_type }} id="{{ id }}" title="{{ title }}">
 		<fieldset class="fieldset-auto-width">
 			{{ caller() }}
-			{{ button(saveText, "form_submit") }}
 		</fieldset>
 	</form>
 {%- endmacro %}
@@ -67,8 +70,8 @@
 	</div>
 {%- endmacro %}
 
-{% macro floating_list() -%}
-	<div class='foodie-float-list'>
+{% macro floating_list(id = 'recipe-list') -%}
+	<div class='foodie-float-list' id="{{ id }}">
 		{{ caller() }}
 	</div>
 {%- endmacro %}

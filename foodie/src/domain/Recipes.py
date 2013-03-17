@@ -1,6 +1,12 @@
 from google.appengine.ext import db
 from google.appengine.api import images
 
+ICON_WIDTH = 64
+ICON_HEIGHT = 64
+
+PHOTO_WIDTH = 512
+PHOTO_HEIGHT = 512
+
 class Recipe(db.Model):
     title = db.StringProperty()
     author = db.StringProperty()
@@ -9,8 +15,9 @@ class Recipe(db.Model):
     icon = db.BlobProperty()
     
     def set_photo(self, photo):
-        self.photo = db.Blob(photo)
-        icon = images.resize(photo, 64, 64)
+        trimmed_photo = images.resize(photo, PHOTO_WIDTH, PHOTO_HEIGHT)
+        self.photo = db.Blob(trimmed_photo)
+        icon = images.resize(photo, ICON_WIDTH, ICON_HEIGHT)
         self.icon = db.Blob(icon)
                              
                              
