@@ -21,15 +21,6 @@ $(function() {
 		});
 	});
 	
-	function addAnotherInputHandler() {
-		var parent = $(this).parent();
-		var clonedDiv = parent.clone();
-		clonedDiv.children(":first").val("");
-		parent.after(clonedDiv);
-		parent.children().last().remove();
-		clonedDiv.children().last().click(addAnotherInputHandler)
-	}
-	
 	$('.add_another_input').button().click(addAnotherInputHandler);
 	
 	$('.form_submit').button().click(function() {
@@ -44,41 +35,14 @@ $(function() {
 	    	  
 	      }
 	});
-	
-	$("#create-recipe-form").dialog({
-	      autoOpen: false,
-	      height: 600,
-	      width: 400,
-	      modal: true,
-	      buttons: {
-	    	Save: function() {
-	    		var form = $(this);
-	    		var formData = new FormData(form[0]); 
-	    		$.ajax({
-	    	        url: form.attr("action"),
-	    	        type: 'POST',
-	    	        data: formData,
-	    	        //Options to tell JQuery not to process data or worry about content-type
-	    	        cache: false,
-	    	        contentType: false,
-	    	        processData: false,
-	    	        success: function(data) {
-	    	        	$('#recipe-list').append(data);
-	    	        }
-	    		});
-	    		$(this).dialog("close");
-	    	},
-	        Cancel: function() {
-	          $( this ).dialog("close");
-	        }
-	      },
-	      close: function() {
-	      }
-	});
-	
-	$(".create-recipe-button").click(function() {
-		$( "#create-recipe-form" ).dialog( "open" );
-		return false;
-	})
-})
+});
+
+function addAnotherInputHandler() {
+	var parent = $(this).parent();
+	var clonedDiv = parent.clone();
+	clonedDiv.children(":first").val("");
+	parent.after(clonedDiv);
+	parent.children().last().remove();
+	clonedDiv.children().last().click(addAnotherInputHandler)
+}
 

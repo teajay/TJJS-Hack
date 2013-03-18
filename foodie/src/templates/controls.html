@@ -44,9 +44,9 @@
 	</form>
 {%- endmacro %}
 
-{% macro add_more_input(type, name, text, class='foodie-add-more-input') -%}
+{% macro add_more_input(type, name, text, class='') -%}
 	{{ text }}
-	<div>
+	<div class='foodie-add-more-input'>
 		<input type="{{ type }}" name="{{ name }}" class="{{ class }} text ui-widget-content ui-corner-all"/>
 		{{ button("+", "add_another_input") }}
 	</div>
