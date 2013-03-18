@@ -51,12 +51,4 @@ $(function() {
 		form.dialog( "open" );
 		return false;
 	})
-	
-	$(".create-recipe-button").test(this);
-	
 });
-
-
-function test(obj) {
-	alert ('hi');
-}
