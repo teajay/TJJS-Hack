@@ -21,8 +21,6 @@ $(function() {
 		});
 	});
 	
-	$('.add_another_input').button().click(addAnotherInputHandler);
-	
 	$('.form_submit').button().click(function() {
 		var form = $(this).parent().parent();
 		form.submit();
@@ -36,13 +34,4 @@ $(function() {
 	      }
 	});
 });
-
-function addAnotherInputHandler() {
-	var parent = $(this).parent();
-	var clonedDiv = parent.clone();
-	clonedDiv.children(":first").val("");
-	parent.after(clonedDiv);
-	parent.children().last().remove();
-	clonedDiv.children().last().click(addAnotherInputHandler)
-}
 

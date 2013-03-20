@@ -1,9 +1,5 @@
 {# Button stuff #}
 
-{% macro button_link(location, text) -%}
-	<button type='button' class='foodie_button' value='{{location}}'>{{ text }}</button>
-{%- endmacro %}
-
 {% macro button_post_link(location, text) -%}
 	<button type='button' class='foodie_post_button' value='{{location}}'>{{ text }}</button>
 {%- endmacro %}
@@ -42,14 +38,6 @@
 			{{ caller() }}
 		</fieldset>
 	</form>
-{%- endmacro %}
-
-{% macro add_more_input(type, name, text, class='') -%}
-	{{ text }}
-	<div class='foodie-add-more-input'>
-		<input type="{{ type }}" name="{{ name }}" class="{{ class }} text ui-widget-content ui-corner-all"/>
-		{{ button("+", "add_another_input") }}
-	</div>
 {%- endmacro %}
 
 {% macro input(type, name, label) -%}

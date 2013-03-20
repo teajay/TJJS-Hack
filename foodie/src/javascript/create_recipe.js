@@ -2,16 +2,19 @@ $(function() {
 	
 	var form = $("#create-recipe-form");
 	var formElement = form[0];
+	var recipeList = $("#recipe-list");
 	
 	function cleanupForm() {
-    	formElement.reset();
+		formElement.reset();
     	
-    	var lastInput = $('.foodie-add-more-input').last();
-    	var parent = lastInput.parent();
-    	var clone = lastInput.clone();
-    	$('.foodie-add-more-input').remove();
-    	parent.append(clone);
-    	clone.children().last().click(addAnotherInputHandler);
+		var addMoreInputsSelector = $('.add-more-input');
+		var parent = addMoreInputsSelector.parent();
+		addMoreInputsSelector.remove();
+		$('<div>', {
+			'class':'add-more-input'
+		}).addMoreInput({
+			'class': 'add-more-input'
+		}).appendTo(parent);
 	}
 	
 	form.dialog({
@@ -31,7 +34,7 @@ $(function() {
 	    	        contentType: false,
 	    	        processData: false,
 	    	        success: function(data) {
-	    	        	$('#recipe-list').append(data);
+	    	        	recipeList.append(data);
 	    	        	cleanupForm();
 	    	        }
 	    		});
@@ -51,4 +54,8 @@ $(function() {
 		form.dialog( "open" );
 		return false;
 	})
+	
+	$(".add-more-input").addMoreInput({
+		class:'add-more-input'
+	});
 });

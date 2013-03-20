@@ -81,7 +81,7 @@ class CreateRecipeHandler(FoodieHandler):
         recipe.cookbook = self.request.get("cookbook")
         recipe.set_photo(self.request.get("img"))
         
-        ingredients = self.request.get_all("test")
+        ingredients = self.request.get_all("ingredient")
         
         recipe.put()
         
