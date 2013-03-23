@@ -13,6 +13,7 @@ html, body {
 
 h1 {
 	font-size: 2em;
+	font-weight:600;
 }
 
 h2 {
@@ -100,4 +101,43 @@ h2 {
 
 .add-more-button span {
 	width:15px;
+}
+
+.foodie-recipe-main {
+	margin-left:30px;
+}
+
+.foodie-recipe-right {
+	float:right;
+	margin-right:50px;
+}
+
+.foodie-recipe-buttons button {
+	float:right;
+}
+
+.foodie-recipe-items {
+	list-style-type:none;
+	padding-left:0px;
+}
+
+.foodie-ingredients h2, .foodie-recipe-method h2 {
+	font-size:1.2em;
+	font-weight:600;
+	
+}
+
+.foodie-recipe-main h1, .foodie-ingredients h2, .foodie-recipe-method h2 {
+	margin-right:572px;
+	-moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    padding:5px;
+    height:35px;
+    vertical-align:middle;
+    line-height:35px;
+    background-color:#685642;
+    padding-left:10px;
+    color:white;
+    font-weight:normal;
 }

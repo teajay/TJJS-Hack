@@ -66,10 +66,11 @@
 
 {% macro float_element(title, location, icon_location) -%}
 	<div class='foodie-float-element'>
-		<a href='{{ location }}'>{{ title }}</a>
-		<div class='foodie-float-icon'>
-			<img src='{{ icon_location }}' />
-		</div>
+		<a href='{{ location }}'>{{ title }}
+			<div class='foodie-float-icon'>
+				<img src='{{ icon_location }}' />
+			</div>
+		</a>
 	</div>
 {%- endmacro %}
 

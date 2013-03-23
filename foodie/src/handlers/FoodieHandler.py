@@ -2,6 +2,7 @@ import webapp2
 import jinja2
 
 from google.appengine.api import users
+import Locations as locations
 
 jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
@@ -21,7 +22,8 @@ class FoodieHandler(webapp2.RequestHandler):
         default_template_values = {
             'user_name': user_name,
             'url_linktext': url_linktext,
-            'url': url
+            'url': url,
+            'location_provider': locations.get_location_provider()
         }
         
         all_values = dict(default_template_values.items() + template_values.items()) 

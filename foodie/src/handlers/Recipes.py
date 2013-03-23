@@ -12,15 +12,14 @@ class RecipesHandler(FoodieHandler):
         recipes = recipe_query.run()
             
         template_values = {
-            'recipes': recipes,
-            'location_provider': RecipeLocationProvider(),
+            'recipes': recipes
         }
         
         self.render_template('recipes.html', template_values)
        
     @staticmethod 
     def location():
-        return '/recipes'
+        return '/'
     
     
 class RecipeHandler(FoodieHandler):
@@ -28,11 +27,8 @@ class RecipeHandler(FoodieHandler):
     def get(self, recipe_key):
         recipe = Recipe.get(recipe_key)
         
-        location_provider = RecipeLocationProvider()
-        
         template_values = {
-            'recipe': recipe,
-            'location_provider': location_provider
+            'recipe': recipe
         }
         
         self.render_template('recipe.html', template_values)
@@ -93,8 +89,7 @@ class CreateRecipeHandler(FoodieHandler):
                 unit=ingredient["unit"]).put()
         
         template_values = {
-            "recipe": recipe,
-            "location_provider": RecipeLocationProvider()
+            "recipe": recipe
         }
         self.render_template("float_element.html", template_values)
         
@@ -132,7 +127,7 @@ class IngredientsHandler(FoodieHandler):
     @staticmethod
     def location():
         return '/get_ingredients'
-        
+    
 class RecipeLocationProvider:
     
     def get_location(self, recipe):
@@ -153,4 +148,8 @@ class RecipeLocationProvider:
     
     def get_save_location(self):
         return CreateRecipeHandler.location()
+    
+    def get_home_location(self):
+        return RecipesHandler.location()
+    
     

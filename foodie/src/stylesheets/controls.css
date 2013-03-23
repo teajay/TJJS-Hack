@@ -5,7 +5,7 @@
 }
 
 .foodie-float-element {
-	background-color:#eeeeee;
+	background-color:#685642;;
 	border: 1px solid #685642;
 	height: 150px;
 	width: 150px;
@@ -16,6 +16,10 @@
 	-moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
+}
+
+.foodie-float-element a {
+	color:white;
 }
 
 .foodie-float-element a {

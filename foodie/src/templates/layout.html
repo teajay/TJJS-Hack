@@ -32,7 +32,7 @@
 				<div id="nav">
 					<div class="foodie-links">
 						<ul>
-							<li><a href="/recipes">Home</a></li>
+							<li><a href='{{ location_provider.get_home_location() }}'>Home</a></li>
 							<li>{{ controls.link("Create Recipe", "create-recipe-button") }}</li>
 						</ul>
 					</div>

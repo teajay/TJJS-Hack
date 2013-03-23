@@ -1,6 +1,8 @@
 import webapp2
 from handlers.Recipes import *
+import handlers.Locations as locations
 
+locations.register_location_provider(RecipeLocationProvider())
 
 app = webapp2.WSGIApplication([(CreateRecipeHandler.location(), CreateRecipeHandler),
                                (RecipesHandler.location(), RecipesHandler),
