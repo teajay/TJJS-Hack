@@ -17,14 +17,22 @@ $(function() {
 		}).appendTo(parent);
 	}
 	
+	function createFormData(addMoreInputSelector) {
+		var recipeItems = addMoreInputSelector.addMoreInput("getJson");
+		addMoreInputSelector.addMoreInput("remove");
+		var formData = new FormData(formElement); 
+		formData.append("ingredients", recipeItems);
+		return formData;
+	}
+	
 	form.dialog({
 	      autoOpen: false,
 	      height: 600,
-	      width: 400,
+	      width: 450,
 	      modal: true,
 	      buttons: {
 	    	Save: function() {
-	    		var formData = new FormData(formElement); 
+	    		var formData = createFormData($(".add-more-input"));
 	    		$.ajax({
 	    	        url: form.attr("action"),
 	    	        type: 'POST',

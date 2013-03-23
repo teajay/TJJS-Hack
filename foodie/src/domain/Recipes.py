@@ -24,6 +24,8 @@ class Recipe(db.Model):
 class RecipeItem(db.Model):
     recipe = db.ReferenceProperty(Recipe, collection_name = "items")
     ingredient = db.StringProperty()
+    quantity = db.FloatProperty()
+    unit = db.StringProperty()
     
 
 class IngredientProvider:

@@ -82,3 +82,22 @@ h2 {
 	clear:both;
 }
 
+.foodie-quantity, .foodie-unit {
+	width:80px;
+	height:25px;
+	margin:5px;
+}
+
+.foodie-quantity-group {
+	float:right;
+	margin-right:10px;
+}
+
+.all-ingredients {
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+.add-more-button span {
+	width:15px;
+}

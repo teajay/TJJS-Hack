@@ -81,12 +81,16 @@ class CreateRecipeHandler(FoodieHandler):
         recipe.cookbook = self.request.get("cookbook")
         recipe.set_photo(self.request.get("img"))
         
-        ingredients = self.request.get_all("ingredient")
+        ingredients = json.loads(self.request.get("ingredients"))
         
         recipe.put()
         
         for ingredient in ingredients:
-            RecipeItem(recipe=recipe, ingredient=ingredient).put()
+            RecipeItem(
+                recipe=recipe,
+                ingredient=ingredient["ingredient"],
+                quantity=float(ingredient["quantity"]),
+                unit=ingredient["unit"]).put()
         
         template_values = {
             "recipe": recipe,

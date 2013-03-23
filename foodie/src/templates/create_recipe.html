@@ -1,12 +1,12 @@
 {% import "controls.html" as controls %}
 
 {% macro add_more_input() -%}
-	<div class="add-more-input" />
+	<div><span class="add-more-input" /></div>
 {%- endmacro %}
 
 {% macro ingredients_area() -%}
-	<div>
-		Ingredients
+	<div class="all-ingredients">Ingredients</div>
+	<div>	
 		{{ add_more_input() }}
 	</div>
 {%- endmacro %}

@@ -20,7 +20,7 @@
 	<ul class='ingredients'>
 		{% for recipe_item in recipe.items %}
 			<li>
-				{{ recipe_item.ingredient }}
+				{{ recipe_item.ingredient }} {{ recipe_item.quantity }} {{ recipe_item.unit }}
 			</li>
 		{% endfor %}
 	</ul>
