@@ -8,6 +8,8 @@ PHOTO_WIDTH = 512
 PHOTO_HEIGHT = 512
 
 class Recipe(db.Model):
+    # TODO: We should probably constrain these but I was too lazy to think about it
+    user_id = db.StringProperty()
     title = db.StringProperty()
     author = db.StringProperty()
     cookbook = db.StringProperty()

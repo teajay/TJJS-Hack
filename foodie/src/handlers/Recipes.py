@@ -3,20 +3,21 @@ from domain.Recipes import RecipeItem
 from FoodieHandler import FoodieHandler
 from domain.Recipes import IngredientProvider
 from Helper import Redirect
+from google.appengine.api import users
 import json
 
 class RecipesHandler(FoodieHandler):
     
     def get(self):
-        recipe_query = Recipe.all()
+        recipe_query = Recipe.all().filter('user_id =', users.get_current_user().user_id())
         recipes = recipe_query.run()
             
         template_values = {
             'recipes': recipes
         }
-        
+            
         self.render_template('recipes.html', template_values)
-       
+           
     @staticmethod 
     def location():
         return '/'
@@ -71,7 +72,7 @@ class CreateRecipeHandler(FoodieHandler):
         
     def post(self):
         recipe = Recipe()
-        
+        recipe.user_id = users.get_current_user().user_id()
         recipe.title = self.request.get("title")
         recipe.author = self.request.get("author")
         recipe.cookbook = self.request.get("cookbook")
