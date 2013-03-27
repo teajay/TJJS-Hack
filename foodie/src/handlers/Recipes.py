@@ -20,7 +20,7 @@ class RecipesHandler(FoodieHandler):
            
     @staticmethod 
     def location():
-        return '/'
+        return '/recipes'
     
     
 class RecipeHandler(FoodieHandler):

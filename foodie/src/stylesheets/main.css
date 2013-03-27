@@ -83,6 +83,20 @@ h2 {
 	clear:both;
 }
 
+#signin-links {
+	text-align: center;
+	padding-top: 10px;
+}
+
+#splash {
+	padding-top: 10px;
+	width: 800px;
+	height: 600px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .foodie-quantity, .foodie-unit {
 	width:80px;
 	height:25px;
