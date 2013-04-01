@@ -5,6 +5,7 @@ from domain.Recipes import IngredientProvider
 from Helper import Redirect
 from google.appengine.api import users
 import json
+from Files import TempFile
 
 class RecipesHandler(FoodieHandler):
     
@@ -76,7 +77,10 @@ class CreateRecipeHandler(FoodieHandler):
         recipe.title = self.request.get("title")
         recipe.author = self.request.get("author")
         recipe.cookbook = self.request.get("cookbook")
-        recipe.set_photo(self.request.get("img"))
+        
+        temp_file = TempFile.get(self.request.get("file_key"))
+        recipe.set_photo(temp_file)
+        recipe.set_icon(temp_file)
         
         ingredients = json.loads(self.request.get("ingredients"))
         

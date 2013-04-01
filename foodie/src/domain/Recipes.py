@@ -4,9 +4,6 @@ from google.appengine.api import images
 ICON_WIDTH = 64
 ICON_HEIGHT = 64
 
-PHOTO_WIDTH = 512
-PHOTO_HEIGHT = 512
-
 class Recipe(db.Model):
     # TODO: We should probably constrain these but I was too lazy to think about it
     user_id = db.StringProperty()
@@ -16,11 +13,12 @@ class Recipe(db.Model):
     photo = db.BlobProperty()
     icon = db.BlobProperty()
     
-    def set_photo(self, photo):
-        trimmed_photo = images.resize(photo, PHOTO_WIDTH, PHOTO_HEIGHT)
-        self.photo = db.Blob(trimmed_photo)
-        icon = images.resize(photo, ICON_WIDTH, ICON_HEIGHT)
+    def set_icon(self, temp_file):
+        icon = images.resize(temp_file.data, ICON_WIDTH, ICON_HEIGHT)
         self.icon = db.Blob(icon)
+        
+    def set_photo(self, temp_file):
+        self.photo = temp_file.data
                              
                              
 class RecipeItem(db.Model):

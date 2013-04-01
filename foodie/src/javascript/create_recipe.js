@@ -66,4 +66,9 @@ $(function() {
 	$(".add-more-input").addMoreInput({
 		class:'add-more-input'
 	});
+	
+	$(".foodie-file-drop").filedrop({
+		'labelElement': $('.foodie-drop-label'),
+		'formElement': form
+	});
 });

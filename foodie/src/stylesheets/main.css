@@ -155,3 +155,12 @@ h2 {
     color:white;
     font-weight:normal;
 }
+
+.foodie-file-drop {
+	border-style:dotted;
+	border-width:thin;
+	height:80px;
+	width:98%;
+	margin-top:5px;
+	
+}
