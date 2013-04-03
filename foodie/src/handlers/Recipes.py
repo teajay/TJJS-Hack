@@ -78,9 +78,12 @@ class CreateRecipeHandler(FoodieHandler):
         recipe.author = self.request.get("author")
         recipe.cookbook = self.request.get("cookbook")
         
-        temp_file = TempFile.get(self.request.get("file_key"))
-        recipe.set_photo(temp_file)
-        recipe.set_icon(temp_file)
+        file_key = self.request.get("file_key", default_value=None)
+        if file_key is not None:
+            temp_file = TempFile.get(file_key)
+            if temp_file is not None:
+                recipe.set_photo(temp_file)
+                recipe.set_icon(temp_file)
         
         ingredients = json.loads(self.request.get("ingredients"))
         
