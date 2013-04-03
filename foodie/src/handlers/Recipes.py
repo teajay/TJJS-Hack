@@ -1,11 +1,14 @@
+from domain.Recipes import IngredientProvider
 from domain.Recipes import Recipe
 from domain.Recipes import RecipeItem
-from FoodieHandler import FoodieHandler
-from domain.Recipes import IngredientProvider
-from Helper import Redirect
-from google.appengine.api import users
-import json
 from Files import TempFile
+from FoodieHandler import FoodieHandler
+from Helper import Redirect
+
+from google.appengine.api import users
+
+import json
+from fractions import Fraction
 
 class RecipesHandler(FoodieHandler):
     
@@ -93,7 +96,7 @@ class CreateRecipeHandler(FoodieHandler):
             RecipeItem(
                 recipe=recipe,
                 ingredient=ingredient["ingredient"],
-                quantity=float(ingredient["quantity"]),
+                quantity=float(Fraction(ingredient["quantity"])),
                 unit=ingredient["unit"]).put()
         
         template_values = {

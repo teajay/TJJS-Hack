@@ -28,7 +28,7 @@
 				}).appendTo(quantityDiv);
 				
 				$("<input>", {
-					"type": "number",
+					"type": "text",
 					"name": "quantity",
 					"class": "foodie-quantity ui-widget-content ui-corner-all"
 				}).appendTo(quantityDiv);
