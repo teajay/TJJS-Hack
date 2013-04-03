@@ -13,6 +13,24 @@
 				dropDiv.children('.' + settings.labelClass).text(text);
 			}
 			
+			// TODO. It's probably a good idea to generalize the progress indicator.
+			function setProcessingIndicator() {
+				$('<img>', {
+					'src': '/images/ajax-loader.gif',
+					'class': 'foodie-ajax-busy'
+				}).appendTo(dropDiv);
+				stopProcessingIndicator();
+			}
+			
+			function startProcessingIndicator() {
+				setLabelText("Processing...");
+				dropDiv.children('img.foodie-ajax-busy').show();
+			}
+			
+			function stopProcessingIndicator() {
+				dropDiv.children('img.foodie-ajax-busy').hide();
+			}
+			
 			function handleFileDropped(event) {
 				event.stopPropagation();
 				event.preventDefault();
@@ -93,13 +111,14 @@
 			}
 			
 			function handleUploadSuccess(response) {
+				stopProcessingIndicator();
 				setLabelText("File Added: ");
 	        	removeOldFileAttachment();
 	        	setupAddedFileDiv(response.key, response.name);
 			}
 			
 			function handleFiles(files) {
-				setLabelText("Processing...");
+				startProcessingIndicator();
 				
 				// Only handle a single file right now.
 				// In the future we can allow for multiple uploads.
@@ -130,6 +149,9 @@
 			dropDiv.bind('dragover', stopEventHandler);
 			dropDiv.bind('dragexit', stopEventHandler);
 			dropDiv.bind('drop', handleFileDropped);
+		
+			// Add the processing indicator to the div.
+			setProcessingIndicator();
 			
 			// Set the initial label text.
 			setLabelText(settings.initialLabel);

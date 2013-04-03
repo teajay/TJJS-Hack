@@ -185,3 +185,12 @@ h2 {
 	float:right;
 	margin-right:5px;
 }
+
+img.foodie-ajax-busy {
+	position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -8px; /* -1 * image width / 2 */
+    margin-top: -8x;  /* -1 * image height / 2 */
+    display: block;  
+}
