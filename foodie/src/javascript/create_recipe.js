@@ -68,7 +68,6 @@ $(function() {
 	});
 	
 	$(".foodie-file-drop").filedrop({
-		'labelElement': $('.foodie-drop-label'),
-		'formElement': form
+		'labelClass': 'foodie-drop-label'
 	});
 });

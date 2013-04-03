@@ -21,3 +21,15 @@ class FileUploadHandler(FoodieHandler):
     @staticmethod
     def location():
         return '/temp/fileupload'
+    
+    
+class RemoveFileUploadHandler(FoodieHandler):
+    
+    def post(self):
+        file_key = self.request.get("file_key")
+        temp_file = TempFile.get(file_key)
+        temp_file.delete()
+        
+    @staticmethod
+    def location():
+        return '/temp/fileupload/remove'
