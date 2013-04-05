@@ -5,8 +5,7 @@
 			
 			// Create some defaults, extending them with any options that were provided
 			var settings = $.extend( {
-				'labelClass': undefined,
-				'initialLabel' : initialLabel
+				'labelClass': undefined
 			}, options);
 			
 			// TODO. It's probably a good idea to generalize the progress indicator.
@@ -119,7 +118,7 @@
 			setProcessingIndicator();
 
 			// Set the initial label text.
-			setLabelText(dropDiv, settings.labelClass, settings.initialLabel);
+			setLabelText(dropDiv, settings.labelClass, initialLabel);
 		},
 		clear: function(options) {
 			var settings = $.extend( {
