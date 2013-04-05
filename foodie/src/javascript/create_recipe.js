@@ -3,26 +3,64 @@ $(function() {
 	var form = $("#create-recipe-form");
 	var formElement = form[0];
 	var recipeList = $("#recipe-list");
+	var addMoreInputs = $(".add-more-input");
+	var tips = $('.validate-tips');
+	var fileDrop = $('.foodie-file-drop');
 	
 	function cleanupForm() {
 		formElement.reset();
-    	
-		var addMoreInputsSelector = $('.add-more-input');
-		var parent = addMoreInputsSelector.parent();
-		addMoreInputsSelector.remove();
+		
+		var parent = addMoreInputs.parent();
+		addMoreInputs.remove();
 		$('<div>', {
 			'class':'add-more-input'
 		}).addMoreInput({
 			'class': 'add-more-input'
 		}).appendTo(parent);
+		
+		fileDrop.filedrop("clear", {
+			"labelClass": "foodie-drop-label"
+		});
+		
+		clearErrors();
 	}
 	
-	function createFormData(addMoreInputSelector) {
-		var recipeItems = addMoreInputSelector.addMoreInput("getJson");
-		addMoreInputSelector.addMoreInput("remove");
+	function createFormData() {
+		var recipeItems = addMoreInputs.addMoreInput("getJson");
+		addMoreInputs.addMoreInput("remove");
 		var formData = new FormData(formElement); 
 		formData.append("ingredients", recipeItems);
 		return formData;
+	}
+	
+	function validateIngredients() {
+		var valid = true;
+		addMoreInputs.each(function() {
+			var quantityElement = $(this).children('.foodie-quantity-group').children('input.foodie-quantity');
+			var quantityValue = quantityElement.val();
+			var isValid = isNumber(quantityValue)
+			if(!isNumber(quantityValue)) {
+				quantityElement.addClass( "ui-state-error" );
+				updateTips('Please enter a valid quantity');
+				valid = false;
+			}
+		});
+		return valid;
+	}
+	
+	function clearErrors() {
+		addMoreInputs.each(function() {
+			var quantityElement = $(this).children('.foodie-quantity-group').children('input.foodie-quantity');
+			quantityElement.val("").removeClass( "ui-state-error" );
+		});
+		tips.text('');
+	}
+	
+	function updateTips( t ) {
+		tips.text( t ).addClass( "ui-state-highlight" );
+		setTimeout(function() {
+			tips.removeClass( "ui-state-highlight", 1500 );
+		}, 500 );
 	}
 	
 	form.dialog({
@@ -32,7 +70,12 @@ $(function() {
 	      modal: true,
 	      buttons: {
 	    	Save: function() {
-	    		var formData = createFormData($(".add-more-input"));
+	    		
+	    		if(!validateIngredients()) {
+	    			return;
+	    		}
+	    		
+	    		var formData = createFormData();
 	    		$.ajax({
 	    	        url: form.attr("action"),
 	    	        type: 'POST',

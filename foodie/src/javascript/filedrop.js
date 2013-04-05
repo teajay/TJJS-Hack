@@ -6,12 +6,8 @@
 			// Create some defaults, extending them with any options that were provided
 			var settings = $.extend( {
 				'labelClass': undefined,
-				'initialLabel' : 'Drop files here...'
+				'initialLabel' : initialLabel
 			}, options);
-			
-			function setLabelText(text) {
-				dropDiv.children('.' + settings.labelClass).text(text);
-			}
 			
 			// TODO. It's probably a good idea to generalize the progress indicator.
 			function setProcessingIndicator() {
@@ -23,7 +19,7 @@
 			}
 			
 			function startProcessingIndicator() {
-				setLabelText("Processing...");
+				setLabelText(dropDiv, settings.labelClass, "Processing...");
 				dropDiv.children('img.foodie-ajax-busy').show();
 			}
 			
@@ -46,37 +42,6 @@
 			function stopEventHandler(event) {
 				event.stopPropagation();
 				event.preventDefault();
-			}
-			
-			function removeServerFileAttachment(key) {
-				var formData = new FormData();
-				formData.append('file_key', key);
-
-				$.ajax({
-					url: '/temp/fileupload/remove',
-					type: 'POST',
-					data: formData,
-					cache: false,
-					contentType: false,
-					processData: false
-				});
-			}
-			
-			function removeOldFileAttachment() {
-				var fileAttachElement = dropDiv.children('.foodie-file-attach');
-				if (!fileAttachElement.length) {
-					return;
-				}
-				
-				var inputElement = fileAttachElement.children('input');
-				if (!inputElement.length) {
-					return;
-				}
-				
-				var key = inputElement.attr("value");
-				removeServerFileAttachment(key);
-				
-				fileAttachElement.remove();
 			}
 			
 			function setupAddedFileDiv(fileKey, fileName) {
@@ -106,14 +71,14 @@
 					removeServerFileAttachment(fileKey);
 
 					$(this).parent().remove();
-					setLabelText("Drop files here...");
+					setLabelText(dropDiv, settings.labelClass, "Drop files here...");
 				});
 			}
 			
 			function handleUploadSuccess(response) {
 				stopProcessingIndicator();
-				setLabelText("File Added: ");
-				removeOldFileAttachment();
+				setLabelText(dropDiv, settings.labelClass, "File Added: ");
+				removeOldFileAttachment(dropDiv);
 				setupAddedFileDiv(response.key, response.name);
 			}
 
@@ -154,9 +119,55 @@
 			setProcessingIndicator();
 
 			// Set the initial label text.
-			setLabelText(settings.initialLabel);
+			setLabelText(dropDiv, settings.labelClass, settings.initialLabel);
+		},
+		clear: function(options) {
+			var settings = $.extend( {
+				'labelClass': undefined
+			}, options);
+			
+			var dropDiv = this.first();
+			removeOldFileAttachment(dropDiv);
+			setLabelText(dropDiv, settings.labelClass, initialLabel)
 		}
 	};
+	
+	var initialLabel = "Drop files here..."
+	
+	function removeServerFileAttachment(key) {
+		var formData = new FormData();
+		formData.append('file_key', key);
+
+		$.ajax({
+			url: '/temp/fileupload/remove',
+			type: 'POST',
+			data: formData,
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+	}
+	
+	function removeOldFileAttachment(dropDiv) {
+		var fileAttachElement = dropDiv.children('.foodie-file-attach');
+		if (!fileAttachElement.length) {
+			return;
+		}
+		
+		var inputElement = fileAttachElement.children('input');
+		if (!inputElement.length) {
+			return;
+		}
+		
+		var key = inputElement.attr("value");
+		removeServerFileAttachment(key);
+		
+		fileAttachElement.remove();
+	}
+	
+	function setLabelText(dropDiv, labelClass, text) {
+		dropDiv.children('.' + labelClass).text(text);
+	}
 	
 	$.fn.filedrop = function( method ) {   
 		
