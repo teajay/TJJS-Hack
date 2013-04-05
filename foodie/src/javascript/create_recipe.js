@@ -3,15 +3,19 @@ $(function() {
 	var form = $("#create-recipe-form");
 	var formElement = form[0];
 	var recipeList = $("#recipe-list");
-	var addMoreInputs = $(".add-more-input");
 	var tips = $('.validate-tips');
 	var fileDrop = $('.foodie-file-drop');
+	
+	function addMoreInputs() {
+		return $('.add-more-input');
+	}
 	
 	function cleanupForm() {
 		formElement.reset();
 		
-		var parent = addMoreInputs.parent();
-		addMoreInputs.remove();
+		var addMoreInputsSelector = addMoreInputs();
+		var parent = addMoreInputsSelector.parent();
+		addMoreInputsSelector.remove();
 		$('<div>', {
 			'class':'add-more-input'
 		}).addMoreInput({
@@ -26,8 +30,9 @@ $(function() {
 	}
 	
 	function createFormData() {
-		var recipeItems = addMoreInputs.addMoreInput("getJson");
-		addMoreInputs.addMoreInput("remove");
+		var addMoreInputsSelector = addMoreInputs();
+		var recipeItems = addMoreInputsSelector.addMoreInput("getJson");
+		addMoreInputsSelector.addMoreInput("remove");
 		var formData = new FormData(formElement); 
 		formData.append("ingredients", recipeItems);
 		return formData;
@@ -35,7 +40,8 @@ $(function() {
 	
 	function validateIngredients() {
 		var valid = true;
-		addMoreInputs.each(function() {
+		var addMoreInputsSelector = addMoreInputs();
+		addMoreInputsSelector.each(function() {
 			var quantityElement = $(this).children('.foodie-quantity-group').children('input.foodie-quantity');
 			var quantityValue = quantityElement.val();
 			var isValid = isNumber(quantityValue)
@@ -49,9 +55,10 @@ $(function() {
 	}
 	
 	function clearErrors() {
-		addMoreInputs.each(function() {
+		var addMoreInputsSelector = addMoreInputs();
+		addMoreInputsSelector.each(function() {
 			var quantityElement = $(this).children('.foodie-quantity-group').children('input.foodie-quantity');
-			quantityElement.val("").removeClass( "ui-state-error" );
+			quantityElement.removeClass( "ui-state-error" );
 		});
 		tips.text('');
 	}
@@ -106,7 +113,7 @@ $(function() {
 		return false;
 	})
 	
-	$(".add-more-input").addMoreInput({
+	addMoreInputs().addMoreInput({
 		class:'add-more-input'
 	});
 	
