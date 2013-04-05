@@ -1,11 +1,18 @@
 $(function() {
 	
+	// ----------------
+	// Plugin "members"
+	// ----------------
 	var form = $("#create-recipe-form");
 	var formElement = form[0];
 	var recipeList = $("#recipe-list");
 	var tips = $('.validate-tips');
 	var fileDrop = $('.foodie-file-drop');
 	
+	
+	// ---------------------
+	// Main plugin behaviour
+	// ---------------------
 	function addMoreInputs() {
 		return $('.add-more-input');
 	}
@@ -71,43 +78,45 @@ $(function() {
 	}
 	
 	form.dialog({
-	      autoOpen: false,
-	      height: 600,
-	      width: 450,
-	      modal: true,
-	      buttons: {
-	    	Save: function() {
-	    		
-	    		if(!validateIngredients()) {
-	    			return;
-	    		}
-	    		
-	    		var formData = createFormData();
-	    		$.ajax({
-	    	        url: form.attr("action"),
-	    	        type: 'POST',
-	    	        data: formData,
-	    	        //Options to tell JQuery not to process data or worry about content-type
-	    	        cache: false,
-	    	        contentType: false,
-	    	        processData: false,
-	    	        success: function(data) {
-	    	        	recipeList.append(data);
-	    	        	cleanupForm();
-	    	        }
-	    		});
-	    		$(this).dialog("close");
-	    	},
-	        Cancel: function() {
-	        	cleanupForm();
-	          $( this ).dialog("close");
-	        }
-	      },
-	      close: function() {
-	    	  cleanupForm();
-	      }
+		autoOpen: false,
+		height: 600,
+		width: 450,
+		modal: true,
+		buttons: {
+			Save: function() {
+				if(!validateIngredients()) {
+					return;
+				}
+
+				var formData = createFormData();
+				$.ajax({
+					url: form.attr("action"),
+					type: 'POST',
+					data: formData,
+					//Options to tell JQuery not to process data or worry about content-type
+					cache: false,
+					contentType: false,
+					processData: false,
+					success: function(data) {
+						recipeList.append(data);
+						cleanupForm();
+					}
+				});
+				$(this).dialog("close");
+			},
+			Cancel: function() {
+				cleanupForm();
+				$( this ).dialog("close");
+			}
+		},
+		close: function() {
+			cleanupForm();
+		}
 	});
 	
+	// ------------
+	// Dialog setup
+	// ------------
 	$(".create-recipe-button").click(function() {
 		form.dialog( "open" );
 		return false;

@@ -1,9 +1,10 @@
 (function( $ ){
 	
 	var methods = {
+		// -----------------------
+		// Plugin public functions
+		// -----------------------
 		init : function( options ) { 
-			
-			// Create some defaults, extending them with any options that were provided
 			var settings = $.extend( {
 				'labelClass': undefined
 			}, options);
@@ -131,6 +132,10 @@
 		}
 	};
 	
+	// ----------------
+	// Shared functions
+	// ----------------
+	
 	var initialLabel = "Drop files here..."
 	
 	function removeServerFileAttachment(key) {
@@ -168,6 +173,9 @@
 		dropDiv.children('.' + labelClass).text(text);
 	}
 	
+	// -------------------------------
+	// Entry point to filedrop plugin.
+	// -------------------------------
 	$.fn.filedrop = function( method ) {   
 		
 		// Method calling logic
