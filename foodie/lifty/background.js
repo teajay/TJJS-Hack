@@ -6,6 +6,7 @@ function get_lifty() {
     txt += " from tab " + tab.id;
     alert(txt);
 
+    // TODO(tim): Send to localhost or something for processing.
     var serviceCall = 'http://www.google.com/search?q=' + info.selectionText;
     chrome.tabs.create({url: serviceCall});
   };
@@ -15,5 +16,5 @@ chrome.contextMenus.create({
   "title" : "Add to foodbox",
   "type" : "normal",
   "contexts" : ["selection"],
-  "onclick" : get_lifter()
+  "onclick" : get_lifty()
 });
