@@ -15,8 +15,7 @@ class RecipeMessage(messages.Message):
     
 class GetRecipesRequest(messages.Message):
     user_id = messages.StringField(1, required=True)
-    recipe_id = messages.StringField(2, required=False)
-    include_ingredients = messages.BooleanField(3, required=False)
+    include_ingredients = messages.StringField(2, required=False)
     
 class GetRecipesResponse(messages.Message):
     recipes =  messages.MessageField(RecipeMessage, 1, repeated=True)
