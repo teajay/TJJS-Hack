@@ -34,6 +34,7 @@
 		{% set enc_type = 'enctype="multipart/form-data"' %}
 	{% endif %}
 	<form action="{{ action }}" method="POST" {{ enc_type }} id="{{ id }}" title="{{ title }}">
+		<p class='validate-tips'></p>
 		<fieldset class="fieldset-auto-width">
 			{{ caller() }}
 		</fieldset>
