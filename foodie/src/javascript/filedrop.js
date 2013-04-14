@@ -93,7 +93,7 @@
 				fileFormData.append('file_name', file.name);
 				var upload_url = '';
 				$.ajax({
-					url: "/temp/fileupload",
+					url: "/fileupload",
 					success: function(result) {
 						upload_url = result; 
 					},
@@ -150,7 +150,7 @@
 		formData.append('file_key', key);
 
 		$.ajax({
-			url: '/temp/fileupload/remove',
+			url: '/fileupload/remove',
 			type: 'POST',
 			data: formData,
 			cache: false,
