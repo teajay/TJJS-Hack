@@ -1,8 +1,5 @@
 from google.appengine.ext import db
-from google.appengine.api import images
-
-ICON_WIDTH = 64
-ICON_HEIGHT = 64
+from google.appengine.ext import blobstore
 
 class Recipe(db.Model):
     # TODO: We should probably constrain these but I was too lazy to think about it
@@ -10,16 +7,9 @@ class Recipe(db.Model):
     title = db.StringProperty()
     author = db.StringProperty()
     cookbook = db.StringProperty()
-    photo = db.BlobProperty()
-    icon = db.BlobProperty()
-    
-    def set_icon(self, temp_file):
-        icon = images.resize(temp_file.data, ICON_WIDTH, ICON_HEIGHT)
-        self.icon = db.Blob(icon)
-        
-    def set_photo(self, temp_file):
-        self.photo = temp_file.data
-                             
+    photo_key = blobstore.BlobReferenceProperty()
+    photo_url = db.StringProperty()
+                         
                              
 class RecipeItem(db.Model):
     recipe = db.ReferenceProperty(Recipe, collection_name = "items")

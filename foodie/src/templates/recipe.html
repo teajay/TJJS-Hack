@@ -3,7 +3,7 @@
 
 {% block content %}
 	<div class='foodie-recipe-right'>
-		{{ controls.image(location_provider.get_photo_location(recipe), 512, 512) }}
+		{{ controls.image(recipe.photo_url, 512, 512) }}
 		<div class='foodie-recipe-buttons'>
 			{{ controls.button_post_link(location_provider.get_delete_location(recipe), 'Delete') }}
 			{{ controls.button_post_link('', 'Edit') }}
