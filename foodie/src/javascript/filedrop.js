@@ -91,8 +91,14 @@
 				var file = files[0];
 				fileFormData.append('file', file);
 				fileFormData.append('file_name', file.name);
-				// TODO: Is there a better way to pass this URL around than on hidden div?
-				var upload_url = $( "#upload_url" )[0].innerText
+				var upload_url = '';
+				$.ajax({
+					url: "/temp/fileupload",
+					success: function(result) {
+						upload_url = result; 
+					},
+					async: false
+				})
 				$.ajax({
 					url: upload_url,
 					type: 'POST',

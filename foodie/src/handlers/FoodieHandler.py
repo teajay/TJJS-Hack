@@ -1,7 +1,5 @@
 import webapp2
 import jinja2
-from google.appengine.ext import blobstore
-import logging
 
 from google.appengine.api import users
 import Locations as locations
@@ -11,9 +9,6 @@ jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader('templates
 class FoodieHandler(webapp2.RequestHandler):
     
     def render_template(self, template_name, template_values):
-        # This could likely move somewhere more specific to the create recipe form 
-        upload_url = blobstore.create_upload_url('/temp/fileupload')
-        logging.info('CREATED UPLOAD URL %s' % upload_url)
         user = users.get_current_user()
         url = users.create_logout_url(self.request.uri)
         user_name = user.nickname()
@@ -21,7 +16,6 @@ class FoodieHandler(webapp2.RequestHandler):
             'user_name': user_name,
             'url': url,
             'location_provider': locations.get_location_provider(),
-            'upload_url': upload_url
         }
         
         all_values = dict(default_template_values.items() + template_values.items()) 

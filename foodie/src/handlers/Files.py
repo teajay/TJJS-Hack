@@ -1,6 +1,6 @@
 from FoodieHandler import FoodieHandler
-from domain.Files import TempFile
 from google.appengine.ext.webapp import blobstore_handlers
+from google.appengine.ext import blobstore
 import json
 import logging
 
@@ -16,11 +16,13 @@ class FileUploadHandler(FoodieHandler, blobstore_handlers.BlobstoreUploadHandler
         self.set_json_response(json.dumps(json_response))
         
     def get(self):
-        file_key = self.request.get('file_key')
-        temp_file = TempFile.get(file_key)
+        # Generate a URL that can be used for clients to send us files
+        # i.e., to upload, call GET /temp/fileupload to get a blobstore 
+        # upload URL that can then be used in a POST /temp/fileupload
+        upload_url = blobstore.create_upload_url('/temp/fileupload')
+        logging.info('CREATED UPLOAD URL %s' % upload_url)
+        self.response.out.write(upload_url)
         
-        self.set_img_response(temp_file.data)
-    
     @staticmethod
     def location():
         return '/temp/fileupload'
