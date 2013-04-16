@@ -13,14 +13,14 @@ class FoodieService(remote.Service):
                       name='getrecipe', path='recipe', 
                       http_method='GET')
     def get_recipe(self,request):
-        'TODO: Figure out the URL of images to include in response. Client can render them if they want that way'
         recipe_query = Recipe.all().filter('user_id =', request.user_id)
         recipes_model = recipe_query.run()
         recipes_response = []
         for recipe_model in recipes_model:
             recipe_message = RecipeMessage(title=recipe_model.title,
                                            author=recipe_model.author,
-                                           cookbook=recipe_model.cookbook)
+                                           cookbook=recipe_model.cookbook,
+                                           photo_url=recipe_model.photo_url)
             if request.include_ingredients and request.include_ingredients.lower() == 'true':
                 ingredients_message = []
                 ingredients_model = recipe_model.items.run()

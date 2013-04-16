@@ -15,7 +15,7 @@ class FoodieHandler(webapp2.RequestHandler):
         default_template_values = {
             'user_name': user_name,
             'url': url,
-            'location_provider': locations.get_location_provider()
+            'location_provider': locations.get_location_provider(),
         }
         
         all_values = dict(default_template_values.items() + template_values.items()) 
