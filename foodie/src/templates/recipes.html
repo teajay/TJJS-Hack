@@ -6,7 +6,8 @@
 			{% for recipe in recipes %}
 				{{ controls.float_element(recipe.title if recipe.title != '' else 'no-title',
 					location_provider.get_location(recipe),
-					location_provider.get_icon_location(recipe)) }}
+					recipe.photo_url) }}
+					<!-- Change the photo_url above to use image server's resizing. e.g., =s64-c -->
 			{% endfor %}
 		{% endcall %}
 {% endblock %}

@@ -12,8 +12,6 @@ app = webapp2.WSGIApplication([(CreateRecipeHandler.location(), CreateRecipeHand
                                (IngredientsHandler.location(), IngredientsHandler),
                                (RecipeHandler.location(), RecipeHandler),
                                (DeleteRecipeHandler.location(), DeleteRecipeHandler),
-                               (RecipePhotoHandler.location(), RecipePhotoHandler),
-                               (RecipeIconHandler.location(), RecipeIconHandler),
                                (FileUploadHandler.location(), FileUploadHandler),
                                (RemoveFileUploadHandler.location(), RemoveFileUploadHandler)],
                               debug=True)

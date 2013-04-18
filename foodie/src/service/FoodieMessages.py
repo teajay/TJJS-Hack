@@ -9,9 +9,8 @@ class RecipeMessage(messages.Message):
     title = messages.StringField(1, required=True)
     author = messages.StringField(2, required=True)
     cookbook = messages.StringField(3, required=True)
-    photo = messages.StringField(4, required=True)
-    icon = messages.StringField(5, required=True)
-    ingredients = messages.MessageField(IngredientMessage, 6, repeated=True)
+    photo_url = messages.StringField(4, required=True)
+    ingredients = messages.MessageField(IngredientMessage, 5, repeated=True)
     
 class GetRecipesRequest(messages.Message):
     user_id = messages.StringField(1, required=True)

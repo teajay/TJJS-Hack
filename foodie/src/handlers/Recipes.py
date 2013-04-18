@@ -1,12 +1,11 @@
 from domain.Recipes import IngredientProvider
 from domain.Recipes import Recipe
 from domain.Recipes import RecipeItem
-from Files import TempFile
 from FoodieHandler import FoodieHandler
 from Helper import Redirect
-
 from google.appengine.api import users
-
+from google.appengine.ext.blobstore import BlobKey
+from google.appengine.api import images
 import json
 from fractions import Fraction
 
@@ -46,32 +45,6 @@ class RecipeHandler(FoodieHandler):
     def location_for_recipe(key):
         return '/recipe/' + key
     
-class RecipePhotoHandler(FoodieHandler):
-    def get(self):
-        recipe = Recipe.get(self.request.get('img_id'))
-        self.set_img_response(recipe.photo)
-        
-    @staticmethod
-    def location():
-        return '/recipe_photo'
-    
-    @staticmethod
-    def location_for_recipe(key):
-        return '/recipe_photo?img_id=' + key
-    
-class RecipeIconHandler(FoodieHandler):
-    def get(self):
-        recipe = Recipe.get(self.request.get('img_id'))
-        self.set_img_response(recipe.icon)
-        
-    @staticmethod
-    def location():
-        return '/recipe_icon'
-    
-    @staticmethod
-    def location_for_recipe(key):
-        return '/recipe_icon?img_id=' + key
-   
 class CreateRecipeHandler(FoodieHandler):
         
     def post(self):
@@ -81,17 +54,17 @@ class CreateRecipeHandler(FoodieHandler):
         recipe.author = self.request.get("author")
         recipe.cookbook = self.request.get("cookbook")
         
+        # Grab the file key if one was uploaded, calculate it's URL and store them both
+        # The calculated URL doesn't change, and this way we don't have to compute it again 
         file_key = self.request.get("file_key", default_value=None)
         if file_key is not None:
-            temp_file = TempFile.get(file_key)
-            if temp_file is not None:
-                recipe.set_photo(temp_file)
-                recipe.set_icon(temp_file)
-        
-        ingredients = json.loads(self.request.get("ingredients"))
-        
+            blob_key = BlobKey(file_key)
+            recipe.photo_key = blob_key
+            recipe.photo_url = images.get_serving_url(blob_key)
+                
         recipe.put()
         
+        ingredients = json.loads(self.request.get("ingredients"))
         for ingredient in ingredients:
             RecipeItem(
                 recipe=recipe,
@@ -148,14 +121,6 @@ class RecipeLocationProvider:
     def get_delete_location(self, recipe):
         str_id = str(recipe.key())
         return DeleteRecipeHandler.location_for_recipe(str_id)
-    
-    def get_photo_location(self, recipe):
-        str_id = str(recipe.key())
-        return RecipePhotoHandler.location_for_recipe(str_id)
-    
-    def get_icon_location(self, recipe):
-        str_id = str(recipe.key())
-        return RecipeIconHandler.location_for_recipe(str_id)
     
     def get_save_location(self):
         return CreateRecipeHandler.location()
